@@ -118,6 +118,9 @@ MongoClient.connect('mongodb://localhost:27017/bevallal', {
     app.get('/api/getPartyHall',
             (req, res) => routes.getPartyHall(req, res, db));
 
+    app.get('/api/getPreviousRequests',
+            (req, res) => routes.getPreviousRequests(req, res, db));
+
     app.get('/api/getAvailableSurplusFood', (req, res) => routes.getAvailableSurplusFood(req, res, db));
 
     app.put('/api/acceptAvailableSurplusFood', (req, res) => routes.acceptAvailableSurplusFood(req, res, db));

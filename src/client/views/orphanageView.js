@@ -30,6 +30,7 @@ class OrphanageView extends React.Component {
     var foodDetails = {
       offerer_phone: item.offerer_phone,
       count: item.count,
+      id: item._id,
       receiver_phone: this.props.data.phone
     }
     event.target.textContent = "Requested";

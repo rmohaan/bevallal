@@ -1,3 +1,5 @@
+var ObjectId = require('mongodb').ObjectID;
+
 module.exports = {
 
   loginUser (req, res, next, passport) {
@@ -97,9 +99,21 @@ module.exports = {
     });
   },
 
+  getPreviousRequests (req, res, db) {
+    console.log("getPreviousRequests called");
+    console.log(req.query.phone);
+    db.collection('surplusfood').find({ "receiver_phone": req.query.phone }).toArray(function (err, results) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(results);
+      res.status(200).json(results);
+    });
+  },
+
   getAvailableSurplusFood (req, res, db) {
     console.log("getAvailableSurplusFood called");
-    db.collection('surplusfood').find({ "receiver_phone":""}).toArray(function (err, results) {
+    db.collection('surplusfood').find({ "receiver_phone": "" }).toArray(function (err, results) {
       if (err) {
         console.log(err);
       }
@@ -117,7 +131,7 @@ module.exports = {
       if (results.length > 0) {
         var success = false;
         db.collection('surplusfood').updateOne(
-          {"offerer_phone": req.body.offerer_phone, "count": req.body.count},
+          {"_id": ObjectId(req.body.id)},
           {$set: {"receiver_phone": req.body.receiver_phone}},
           function (err, results) {
             if (results.result.ok === 1) {
