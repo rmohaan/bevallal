@@ -109,21 +109,23 @@ module.exports = {
   },
 
   acceptAvailableSurplusFood (req, res, db) {
-    console.log("acceptAvailableSurplusFood called", req.body);
+    console.log("acceptAvailableSurplusFood called");
     db.collection('surplusfood').find({ "offerer_phone": req.body.offerer_phone, "receiver_phone":""}).toArray(function (err, results) {
       if (err) {
-        console.log("error" + err);
+        console.log(err);
       }
+      console.log(results);
       if (results.length > 0) {
         var success = false;
         db.collection('surplusfood').updateOne(
-          {"offerer_phone": req.body.offerer_phone, "count": req.body.count},
+          {"offerer_phone": req.body.offerer_phone},
           {$set: {"receiver_phone": req.body.receiver_phone}},
           function (err, results) {
+            console.log(results);
             if (results.result.ok === 1) {
               success = true;
               console.log("Update Successful");
-              res.status(200).json({status: success});
+              res.status(200).json(success);
             } else {
               res.status(500).json({
                 message: "Request Failed"
@@ -140,7 +142,7 @@ module.exports = {
 
     var reqBody = req.body;
     reqBody["receiver_phone"] = "";
-
+    
     req.body.createdOn = new Date();
     db.collection('surplusfood').insert(reqBody, function (err, results) {
       if (results.result.ok === 1) {

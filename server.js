@@ -31,6 +31,7 @@ app.use(compress());
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE');
   next();
 });
 app.use(express.static(publicDir));
@@ -65,7 +66,7 @@ function isLoggedIn(req, res, next) {
 }
 
 // mongodb://localhost:27017/fmcg
-MongoClient.connect('mongodb://localhost:27017/', {
+MongoClient.connect('mongodb://localhost:27017/bevallal', {
   uri_decode_auth: true
 }, (err, database) => {
 
@@ -100,10 +101,32 @@ MongoClient.connect('mongodb://localhost:27017/', {
              isLoggedIn,
              (req, res) => routes.logoutUser(req, res));
 
-    app.get('/api/getData',
-            (req, res) => routes.getData(req, res, db));
+    app.get('/api/getAllUsers',
+            (req, res) => routes.getAllUsers(req, res, db));
+
+    app.get('/api/getAllSurplusFoodEntries',
+            (req, res) => routes.getAllSurplusFoodEntries(req, res, db));
 
     app.put('/api/submitData', (req, res) => routes.submitData(req, res, db));
+
+    app.get('/api/verifyValidNumber',
+            (req, res) => routes.verifyValidNumber(req, res, db));
+
+    app.get('/api/getOrphanage',
+            (req, res) => routes.getOrphanage(req, res, db));
+
+    app.get('/api/getPartyHall',
+            (req, res) => routes.getPartyHall(req, res, db));
+
+    app.get('/api/getAvailableSurplusFood', (req, res) => routes.getAvailableSurplusFood(req, res, db));
+
+    app.put('/api/acceptAvailableSurplusFood', (req, res) => routes.acceptAvailableSurplusFood(req, res, db));
+
+    app.post('/api/createSurplusFood', (req, res) => routes.createSurplusFood(req, res, db));
+
+    app.post('/api/createOrphanage', (req, res) => routes.createOrphanage(req, res, db));
+
+    app.post('/api/createPartyHall', (req, res) => routes.createPartyHall(req, res, db));
 
     app.use((req, res, next) => {
       res.sendFile(path.join(publicDir, 'index.html'));

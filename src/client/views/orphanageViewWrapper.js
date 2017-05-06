@@ -6,12 +6,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './header';
 import Footer from './footer';
-import RegisterPage from './registerPage';
-import HomePage from './homePage';
+import OrphanageView from './orphanageView';
 import * as actions from '../actions/index';
 import { connect } from 'react-redux';
 
-class Home extends React.Component {
+class OrphanageViewWrapper extends React.Component {
+
+  componentDidMount () {
+    this.props.dispatch(actions.getAvailableSurplusFood());
+  }
 
   render () {
       return (
@@ -19,7 +22,7 @@ class Home extends React.Component {
           <Header />
           <div className="container-fluid">
             <div className="row">
-                <HomePage />
+                <OrphanageView />
             </div>
           </div>
         </div>
@@ -27,4 +30,4 @@ class Home extends React.Component {
     }
 }
 
-export default connect()(Home);
+export default connect()(OrphanageViewWrapper);

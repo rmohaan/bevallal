@@ -28,6 +28,81 @@ export function submitData(items) {
   });
 }
 
+export function verifyValidNumber (phoneNumber) {
+  return axios({
+    method: 'get',
+    url: '/api/verifyValidNumber',
+    params: {
+      "phone": phoneNumber
+    }
+  });
+}
+
+export function getPartyHall (phoneNumber) {
+  return axios({
+    method: 'get',
+    url: '/api/getPartyHall',
+    params: {
+      "phone": phoneNumber
+    }
+  });
+}
+
+export function getOrphanage (phoneNumber) {
+  return axios({
+    method: 'get',
+    url: '/api/getOrphanage',
+    params: {
+      "phone": phoneNumber
+    }
+  });
+}
+
+export function getAvailableSurplusFood () {
+  return axios({
+    method: 'get',
+    url: '/api/getAvailableSurplusFood'
+  });
+}
+
+export function createPartyHall(items) {
+  return axios({
+    method: 'post',
+    url: '/api/createPartyHall',
+    data: items
+  });
+}
+
+export function createOrphanage(items) {
+  return axios({
+    method: 'post',
+    url: '/api/createOrphanage',
+    data: items
+  });
+}
+
+export function createSurplusFood(items) {
+  var item = {
+    "offerer_phone": "7708267898",
+    "count": 20,
+    "receiver_phone": ""
+  };
+  return axios({
+    method: 'post',
+    url: '/api/createSurplusFood',
+    data: items
+  });
+}
+
+export function acceptAvailableSurplusFood(items) {
+debugger;
+  return axios({
+    method: 'put',
+    url: '/api/acceptAvailableSurplusFood',
+    data: items
+  });
+}
+
 export function fetchDashboardData () {
   return axios.all([
     fetchData()

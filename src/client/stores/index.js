@@ -6,7 +6,10 @@ import * as reducers from '../reducers/index';
 import defaultState from './defaultState';
 
 const reducer = combineReducers({
-  data: reducers.data,
+  numberDetails: reducers.numberDetails,
+  surplusFoodList: reducers.surplusFoodList,
+  requestAcceptStatus: reducers.requestAcceptStatus,
+  partyHall: reducers.setPartyHall,
   routing: routerReducer
 });
 

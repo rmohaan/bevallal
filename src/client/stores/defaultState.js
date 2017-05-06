@@ -1,10 +1,10 @@
 'use strict';
 
 let state = {
-  data: {
-    name: 'React Tutorial',
-    experienceLevel: 'Intermediate'
-  }
+  numberDetails: {},
+  surplusFoodList: [],
+  requestAcceptStatus: {},
+  partyHall: {}
 };
 
 export default state;

@@ -10,6 +10,10 @@ import store from './stores/index';
 import "./stylesheets/main.scss";
 
 import HomePageWrapper from './views/homePageWrapper';
+import RegisterPage from './views/registerPage';
+import OrphanageViewWrapper from './views/orphanageViewWrapper';
+import PartyHallView from './views/partyHallView';
+import EnsureProtectedAccess from './views/ensureProtectedAccess';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -29,6 +33,9 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={HomePageWrapper}/>
+          <Route path='/register' component={RegisterPage}/>
+          <Route path='/orphanage' component={OrphanageViewWrapper}/>
+          <Route path='/partyhall' component={PartyHallView}/>
       </Route>
     </Router>
   </Provider>, document.getElementById('app'));
