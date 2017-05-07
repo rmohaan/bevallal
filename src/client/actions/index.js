@@ -219,7 +219,11 @@ export function createSurplusFood (foodDetails) {
        .then(function (response) {
          console.log(response);
          //dispatch(setIntimationStatus(response.data));
-         dispatch(push("/requestIntimations"));
+         //dispatch(push("/requestIntimations"));
+         if (response.data && response.data.offerer_phone) {
+           dispatch(getPreviousIntimations(response.data.offerer_phone));
+         }
+
        })
        .catch((err) => {
          console.log(err);
@@ -244,7 +248,6 @@ export function createSurplusFoodold (foodDetails) {
 }
 
 export function acceptAvailableSurplusFood (foodDetails) {
-
   console.log("acceptAvailableSurplusFood ", foodDetails);
   return function (dispatch) {
     // dispatch(fetchingData());
@@ -252,6 +255,7 @@ export function acceptAvailableSurplusFood (foodDetails) {
        .then(function (response) {
          console.log(response);
          dispatch(setAcceptStatus(response.data));
+         //dispatch(getPreviousRequests(response.data.receiver_phone));
        })
        .catch((err) => {
          console.log(err);

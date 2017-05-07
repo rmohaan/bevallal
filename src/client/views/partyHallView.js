@@ -8,6 +8,7 @@ import * as actions from '../actions/index';
 import { connect } from 'react-redux';
 import Header from './header';
 import { push } from 'react-router-redux';
+import RequestIntimationsWrapper from './requestIntimationsWrapper'
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -95,6 +96,8 @@ render () {
   return (
     <div className="container">
       {content}
+      <hr />
+      <RequestIntimationsWrapper />
     </div>
   );
   }

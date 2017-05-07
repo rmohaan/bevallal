@@ -102,7 +102,7 @@ module.exports = {
   getPreviousRequests (req, res, db) {
     console.log("getPreviousRequests called");
     console.log(req.query.phone);
-    db.collection('surplusfood').find({ "receiver_phone": req.query.phone }).toArray(function (err, results) {
+    db.collection('surplusfood').find({ "receiver_phone": req.query.phone}).sort( { createdOn: -1 } ).toArray(function (err, results) {
       if (err) {
         console.log(err);
       }
@@ -114,7 +114,7 @@ module.exports = {
   getPreviousIntimations (req, res, db) {
     console.log("getPreviousIntimations called");
     console.log(req.query.phone);
-    db.collection('surplusfood').find({ "offerer_phone": req.query.phone }).toArray(function (err, results) {
+    db.collection('surplusfood').find({ "offerer_phone": req.query.phone}).sort( { createdOn: -1 } ).toArray(function (err, results) {
       if (err) {
         console.log(err);
       }
@@ -144,7 +144,7 @@ module.exports = {
         var success = false;
         db.collection('surplusfood').updateOne(
           {"_id": ObjectId(req.body.id)},
-          {$set: {"receiver_phone": req.body.receiver_phone}},
+          {$set: {"receiver_phone": req.body.receiver_phone , "createdOn": new Date()}},
           function (err, results) {
             if (results.result.ok === 1) {
               success = true;

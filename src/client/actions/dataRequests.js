@@ -75,10 +75,13 @@ export function getPreviousIntimations (phoneNumber) {
   });
 }
 
-export function getPreviousRequests () {
+export function getPreviousRequests (phoneNumber) {
   return axios({
     method: 'get',
-    url: '/api/getPreviousRequests'
+    url: '/api/getPreviousRequests',
+    params: {
+      "phone": phoneNumber
+    }
   });
 }
 

@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as actions from '../actions/index';
 import { connect } from 'react-redux';
+import RequestAcceptedWrapper from './requestAcceptedWrapper';
 
 function convertToArray (data) {
   if (typeof data === 'object') {
@@ -65,11 +66,11 @@ class OrphanageView extends React.Component {
             return (
               <div className="row" key={index}>
                 <div className="col-md-6 orphanage-list">
-                  <div className="col-md-3">
+                  <div className="col-md-4">
                    {item.name}
                    </div>
-                    <div className="col-md-3"> {item.count} </div>
-                    <div className="col-md-3">
+                    <div className="col-md-4"> {item.count} </div>
+                    <div className="col-md-4">
                       <button className="btn btn-success request-button"
                           onClick={(event) => this.handleRequest(event, item)} >
                           <span> {this.props.acceptStatus && this.props.acceptStatus.data
@@ -109,12 +110,18 @@ console.log("from render acceptstatus", this.props.acceptStatus);
     <div className="row">
 
         <div className="col-md-12">
-          <div className="margin-left-27">
-            <h3> {this.props.data.name} - {this.props.data.owner_name} - {this.props.data.area.capitalize()} - {this.props.data.phone}</h3>
+          <div className="col-md-6">
+            <div className="margin-left-10">
+              <h3> {this.props.data.name} - {this.props.data.owner_name} - {this.props.data.area.capitalize()} - {this.props.data.phone}</h3>
+            </div>
+            <hr className="width-100"/>
+            {list}
           </div>
-        <hr className="width-100"/>
-          {list}
+          <div className="col-md-6">
+            <RequestAcceptedWrapper />
+          </div>
         </div>
+
     </div>
     );
   }
@@ -125,7 +132,8 @@ function select (state) {
   return {
     data: state.numberDetails,
     surplusFoodList: state.surplusFoodList,
-    acceptStatus: state.requestAcceptStatus
+    acceptStatus: state.requestAcceptStatus,
+    previousRequests: state.previousRequestsList
   };
 }
 

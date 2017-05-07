@@ -29,7 +29,7 @@ render () {
             </div>
             <div id="navbar" className="navbar-collapse collapse">
               <ul className="nav navbar-nav navbar-right">
-                <li><a onClick={this.handleLogout}>Logout</a></li>
+                <li><a onClick={this.handleLogout}></a></li>
               </ul>
             </div>
           </div>
