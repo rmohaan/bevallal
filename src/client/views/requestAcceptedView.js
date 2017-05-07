@@ -61,7 +61,8 @@ render () {
   }
   return (
     <div>
-      <h3 className="margin-left-10">{this.props.data.name+"'s"} Sucessful Request History</h3>
+      <h3 className="margin-left-35">{this.props.data.name}</h3>
+      <div className="text-align-center availableDon">  Sucessful Request History </div>
       <hr />
       {content}
     </div>

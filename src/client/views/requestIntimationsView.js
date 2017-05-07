@@ -56,7 +56,8 @@ _getDefaultContent(){
 
 _getInitmatedStatus(list){
   return list.map((item, index) => {
-          let date = moment(item.createdOn).format('DD-MMM-YYYY HH:mm:ss').toString();
+          let date = moment(item.createdOn).format('DD-MMM-YYYY HH:mm:ss').toString(),
+              curr = moment.utc().diff(date, 'hours');
           return (
             <div className="row" key={index}>
               <div className="col-md-3">
@@ -64,7 +65,7 @@ _getInitmatedStatus(list){
               </div>
                 <div className="col-md-3"> {item.count} </div>
                 <div className="col-md-3"> {date} </div>
-                <div className="col-md-3"> {item.receiver_phone ? item.receiver_phone : "Not yet requested"} </div>
+                <div className="col-md-3"> {item.receiver_phone ? item.receiver_phone : (curr < 4 ? "Not yet requested" : "Expired")} </div>
               <hr className="hr-styling"/>
             </div>
           );
@@ -87,7 +88,7 @@ render () {
     content = this.generateNoDataFound();
   }
   return (
-    <div className="container">
+    <div className="container-fluid">
       <h3 className="margin-left-35">{this.props.data.name+"'s"} Donation History</h3>
       <hr />
       {content}

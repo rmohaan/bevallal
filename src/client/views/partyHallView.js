@@ -70,7 +70,7 @@ _getDefaultContent(){
               />
 
             <button className="btn btn-success margin-top-10px" onClick={this.handleFoodIntimation}>Intimate Food Surplus</button>
-            <button type="button" onClick={this.handleCancelButton} className="btn btn-secondary float-right margin-right-34 margin-top-10px">Cancel</button>
+            <button type="button" onClick={this.handleCancelButton} className="btn btn-primary float-right margin-right-34 margin-top-10px">Cancel</button>
           </div>
         </div>
     </div>

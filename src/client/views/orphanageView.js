@@ -65,7 +65,7 @@ class OrphanageView extends React.Component {
     return list.map((item, index) => {
             return (
               <div className="row" key={index}>
-                <div className="col-md-6 orphanage-list">
+                <div className="col-md-12 orphanage-list">
                   <div className="col-md-4">
                    {item.name}
                    </div>
@@ -113,7 +113,8 @@ console.log("from render acceptstatus", this.props.acceptStatus);
           <div className="col-md-6">
             <div className="margin-left-10">
               <h3> {this.props.data.name} - {this.props.data.owner_name} - {this.props.data.area.capitalize()} - {this.props.data.phone}</h3>
-            </div>
+              <div className="text-align-center availableDon"> Available Donations </div>
+          </div>
             <hr className="width-100"/>
             {list}
           </div>

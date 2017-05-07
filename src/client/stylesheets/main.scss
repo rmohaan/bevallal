@@ -15,9 +15,12 @@ body {
   font-family: 'Roboto', sans-serif;
   // background: linear-gradient(#48B 50%, rgba(255, 255, 255, 0) 0) 0 0, radial-gradient(circle closest-side, #FFFFFF 53%, rgba(255, 255, 255, 0) 0) 0 0, radial-gradient(circle closest-side, #48B 50%, rgba(255, 255, 255, 0) 0) 55px 0 #FFF;
   background-color: white;
-  background-image: url("http://www.ipohaonlus.org/wp-content/uploads/2017/01/mhAUBt8.jpg");
+  //background-image: url("http://www.ipohaonlus.org/wp-content/uploads/2017/01/mhAUBt8.jpg");
+  background-image: url("http://wallpapercave.com/wp/Vqjr2iR.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  color: #fff;
+  font-weight: bold;
 }
 
 /*
@@ -189,7 +192,6 @@ nav {
 
 .orphanage-list {
   text-align: center;
-  margin-left: 25%;
 }
 
 .request-button {
@@ -235,4 +237,20 @@ nav {
 
 .width-100 {
   width: 100%;
+}
+
+.margin-top-15 {
+  margin-top: 15%;
+}
+
+.width-125px {
+  width: 125px;
+}
+
+.availableDon  {
+  color: gold;
+}
+
+.margin-right-37 {
+  margin-right: 37%;
 }

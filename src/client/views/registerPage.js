@@ -39,6 +39,7 @@ class RegisterPage extends React.Component {
             showCount: false
     };
     this.createUser = (event) => this._createUser(event);
+    this.isValid = () => this._isValid();
     this.handleCancelButton = (event) => this._handleCancelButton(event);
     this.handlePhoneInput = (event) => this._handlePhoneInput(event);
     this.handleNameInput = (event) => this._handleNameInput(event);
@@ -63,16 +64,43 @@ createUserFromState () {
   }
 }
 
+_isValid() {
+  var userDetails = this.createUserFromState();
+  if (!this.state.phone) {
+    return false;
+  }
+  if (!this.state.name) {
+    return false;
+  }
+  if (!this.state.owner_name) {
+    return false;
+  }
+  if (!this.state.email) {
+    return false;
+  }
+  if (!this.state.address) {
+    return false;
+  }
+  if (!this.state.area) {
+    return false;
+  }
+}
+
 _createUser (event) {
     event.preventDefault();
     var userDetails = this.createUserFromState();
     console.log(userDetails);
-    if (userDetails.type === 'orphanage') {
-      this.props.dispatch(actions.createOrphanage(userDetails));
+    if (this.isValid()) {
+      if (userDetails.type === 'orphanage') {
+        this.props.dispatch(actions.createOrphanage(userDetails));
+      }
+      else if (userDetails.type === 'partyhall') {
+        this.props.dispatch(actions.createPartyHall(userDetails));
+      }
+    } else {
+      alert ("All fields are required");
     }
-    else if (userDetails.type === 'partyhall') {
-      this.props.dispatch(actions.createPartyHall(userDetails));
-    }
+
 }
 
 _handlePhoneInput (event) {
@@ -224,7 +252,7 @@ render () {
                />
             </div>
             <button className="btn btn-success" onClick={this.createUser}>Submit Details</button>
-            <button type="button" className="btn btn-secondary float-right margin-right-5" onClick={this.handleCancelButton}>Cancel</button>
+            <button type="button" className="btn btn-primary float-right margin-right-37" onClick={this.handleCancelButton}>Cancel</button>
             </div>
       </div>
     );

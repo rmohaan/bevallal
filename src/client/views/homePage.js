@@ -21,23 +21,14 @@ class HomePage extends React.Component {
     this.handlePhoneInput = (event) => this._handlePhoneInput(event);
   }
 
-  // componentWillReceiveProps (newProps) {
-  //   if (newProps.data && newProps.data.phone) {
-  //     if (newProps.data.type === 'partyhall') {
-  //       this.props.dispatch(push('/partyhall'));
-  //     }
-  //     else {
-  //       this.props.dispatch(push('/orphanage'));
-  //     }
-  //   }
-  //   else {
-  //     this.props.dispatch(push('/register'));
-  //   }
-  // }
-
 _checkPhoneNumber (event) {
     event.preventDefault();
-    this.props.dispatch(actions.verifyValidNumber(this.state.phone));
+    if (this.state.phone && this.state.phone.length === 10) {
+      this.props.dispatch(actions.verifyValidNumber(this.state.phone));
+    }
+    else {
+      alert("Valid Phone number is must");
+    }
 }
 
 _handlePhoneInput (event) {
@@ -48,10 +39,8 @@ _handlePhoneInput (event) {
 
 render () {
   let showClass = this.state.showCount === true ? "form-group" : "hide";
-  console.log(showClass, this.state.showCount);
     return (
-      <div className="container">
-          <legend className="text-align-center">Identify yourself</legend>
+      <div className="container margin-top-15">
             <div className="margin-left-25">
             <div className="form-group">
               <label><b><span className="glyphicon glyphicon-phone"></span>Phone number</b></label>
@@ -64,8 +53,7 @@ render () {
               onChange={this.handlePhoneInput}
               required />
             </div>
-            <button className="btn btn-success" onClick={this.checkPhoneNumber}>Go</button>
-            <button type="button" className="btn btn-secondary float-right margin-right-42">Cancel</button>
+            <button className="btn btn-success float-right margin-right-42 width-125px" onClick={this.checkPhoneNumber}>Go</button>
             </div>
       </div>
     );
