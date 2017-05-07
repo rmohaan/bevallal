@@ -20,8 +20,12 @@ class OrphanageView extends React.Component {
 
   constructor ()  {
     super();
+    String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    }
     this.generateSurplusFoodLayout = (list, cols) => this._generateSurplusFoodLayout(list, cols);
     this.generateNoDataFound = () =>  this._generateNoDataFound();
+    this.generateRequestedLayout = (data) => this._generateRequestedLayout(data);
     this.handleRequest = (event, item) => this._handleRequest(event, item);
   }
 
@@ -33,7 +37,6 @@ class OrphanageView extends React.Component {
       id: item._id,
       receiver_phone: this.props.data.phone
     }
-    event.target.textContent = "Requested";
     this.props.dispatch(actions.acceptAvailableSurplusFood(foodDetails));
   }
 
@@ -41,23 +44,41 @@ class OrphanageView extends React.Component {
     return <div> No Data Found </div>;
   }
 
+  _generateRequestedLayout(data){
+    if (data && data.receiver_phone === this.props.data.phone){
+      return (
+          <div className="panel panel-success">
+            <div className="panel-heading text-align-center">Request approved for {data.offerer_phone}</div>
+          </div>
+        );
+    } else {
+      return (
+        <div className="panel panel-danger">
+          <div className="panel-heading text-align-center">Sorry, Request declined</div>
+        </div>
+      );
+    }
+  }
+
   _generateSurplusFoodLayout (list, text) {
     return list.map((item, index) => {
             return (
               <div className="row" key={index}>
-                <div className="col">
-                  <div>
-                  <span> {item.name ? item.name : "Anonymous"} </span>
-                  <span> {item.count} </span>
-                  <span>
-                    <button className="btn btn-success"
-                        disabled={this.props.acceptStatus.status}
-                        onClick={(event) => this.handleRequest(event, item)} >
-                        {text} </button>
-                  </span>
-                  </div>
-                </div>
-                <hr className="hr-styling"/>
+                <div className="col-md-6 orphanage-list">
+                  <div className="col-md-3">
+                   {item.name}
+                   </div>
+                    <div className="col-md-3"> {item.count} </div>
+                    <div className="col-md-3">
+                      <button className="btn btn-success request-button"
+                          onClick={(event) => this.handleRequest(event, item)} >
+                          <span> {this.props.acceptStatus && this.props.acceptStatus.data
+                            && item._id === this.props.acceptStatus.data.id ? 'Requested' : 'Request'} </span>
+                          </button>
+                    </div>
+                    <hr className="hr-styling"/>
+                    </div>
+
               </div>
             );
     });
@@ -66,18 +87,34 @@ class OrphanageView extends React.Component {
 render () {
 
     let list = this.props.surplusFoodList,
-        text = this.props.acceptStatus &&  this.props.acceptStatus.status === true ? "Request Approved" : 'Request';
+        text = this.props.acceptStatus &&  this.props.acceptStatus.status === true ? "Request" : 'Request';
     list = typeof list === 'object' ? convertToArray(list) : list;
-    if (list.length > 0) {
+console.log("from render acceptstatus", this.props.acceptStatus);
+    if(this.props.acceptStatus && this.props.acceptStatus.data){
+      debugger;
+      list = this.generateRequestedLayout(this.props.acceptStatus.data);
+    }
+    else if(this.props.acceptStatus && this.props.acceptStatus.success === false){
+      debugger;
+      list = this.generateRequestedLayout(this.props.acceptStatus.data);
+    }
+    else if (list.length > 0) {
+      list = list.filter(item => item.name !== undefined);
       list = this.generateSurplusFoodLayout(list, text);
     }
     else {
       list = this.generateNoDataFound();
     }
     return (
-    <div className="cardRender">
-      <legend className="text-align-center">Orphanage - {this.props.data.name}</legend>
-      {list}
+    <div className="row">
+
+        <div className="col-md-12">
+          <div className="margin-left-27">
+            <h3> {this.props.data.name} - {this.props.data.owner_name} - {this.props.data.area.capitalize()} - {this.props.data.phone}</h3>
+          </div>
+        <hr className="width-100"/>
+          {list}
+        </div>
     </div>
     );
   }

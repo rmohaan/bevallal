@@ -111,6 +111,18 @@ module.exports = {
     });
   },
 
+  getPreviousIntimations (req, res, db) {
+    console.log("getPreviousIntimations called");
+    console.log(req.query.phone);
+    db.collection('surplusfood').find({ "offerer_phone": req.query.phone }).toArray(function (err, results) {
+      if (err) {
+        console.log(err);
+      }
+      console.log(results);
+      res.status(200).json(results);
+    });
+  },
+
   getAvailableSurplusFood (req, res, db) {
     console.log("getAvailableSurplusFood called");
     db.collection('surplusfood').find({ "receiver_phone": "" }).toArray(function (err, results) {
@@ -124,7 +136,7 @@ module.exports = {
 
   acceptAvailableSurplusFood (req, res, db) {
     console.log("acceptAvailableSurplusFood called", req.body);
-    db.collection('surplusfood').find({ "offerer_phone": req.body.offerer_phone, "receiver_phone":""}).toArray(function (err, results) {
+    db.collection('surplusfood').find({ _id: ObjectId(req.body.id), "receiver_phone":""}).toArray(function (err, results) {
       if (err) {
         console.log("error" + err);
       }
@@ -137,13 +149,17 @@ module.exports = {
             if (results.result.ok === 1) {
               success = true;
               console.log("Update Successful");
-              res.status(200).json({status: success});
+              res.status(200).json({status: success, data: req.body, details: results});
             } else {
               res.status(500).json({
                 message: "Request Failed"
               });
             }
           });
+      }
+      else {
+        console.log("Update Not possible" + results);
+        res.status(200).json({success: false, data: null});
       }
     });
   },
@@ -158,7 +174,7 @@ module.exports = {
     req.body.createdOn = new Date();
     db.collection('surplusfood').insert(reqBody, function (err, results) {
       if (results.result.ok === 1) {
-        res.status(200).json(results);
+        res.status(200).json(results.ops[0]);
       } else {
         res.status(500).json({
           message: "Request Failed"
@@ -182,7 +198,7 @@ module.exports = {
     req.body.createdOn = new Date();
     db.collection('users').insert(req.body, function (err, results) {
       if (results.result.ok === 1) {
-        res.status(200).json(results);
+        res.status(200).json(results.ops[0]);
       } else {
         res.status(500).json({
           message: "Request Failed"
@@ -197,7 +213,7 @@ module.exports = {
     req.body.createdOn = new Date();
     db.collection('users').insert(req.body, function (err, results) {
       if (results.result.ok === 1) {
-        res.status(200).json(results);
+        res.status(200).json(results.ops[0]);
       } else {
         res.status(500).json({
           message: "Request Failed"

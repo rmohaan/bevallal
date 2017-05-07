@@ -65,6 +65,23 @@ export function getAvailableSurplusFood () {
   });
 }
 
+export function getPreviousIntimations (phoneNumber) {
+  return axios({
+    method: 'get',
+    url: '/api/getPreviousIntimations',
+    params: {
+      "phone": phoneNumber
+    }
+  });
+}
+
+export function getPreviousRequests () {
+  return axios({
+    method: 'get',
+    url: '/api/getPreviousRequests'
+  });
+}
+
 export function createPartyHall(items) {
   return axios({
     method: 'post',
@@ -82,11 +99,6 @@ export function createOrphanage(items) {
 }
 
 export function createSurplusFood(items) {
-  var item = {
-    "offerer_phone": "7708267898",
-    "count": 20,
-    "receiver_phone": ""
-  };
   return axios({
     method: 'post',
     url: '/api/createSurplusFood',

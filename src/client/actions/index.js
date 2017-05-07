@@ -40,9 +40,30 @@ export function setAcceptStatus (data) {
   };
 }
 
-export function setPartyHall (data) {
+export function setUser (data) {
   return {
     type: actionEvents.SET_PARTY_HALL,
+    payload: data
+  };
+}
+
+export function setIntimationStatus (data) {
+  return {
+    type: actionEvents.SET_INTIMATION_STATUS,
+    payload: data
+  };
+}
+
+export function setPreviousIntimations(data){
+  return {
+    type: actionEvents.SET_PREVIOUS_INTIMATIONS,
+    payload: data
+  };
+}
+
+export function setPreviousRequests(data){
+  return {
+    type: actionEvents.SET_PREVIOUS_REQUESTS,
     payload: data
   };
 }
@@ -62,26 +83,19 @@ export function fetchData () {
   };
 }
 
-export function fetchDashboardData () {
-  return function (dispatch) {
-    // dispatch(fetchingData());
-    return dataRequests.fetchDashboardData()
-       .then(function (response) {
-         dispatch(setDashboardData(response));
-       })
-       .catch((err) => {
-         console.log(err);
-          dispatch(push('/'))
-       });
-  };
-}
-
 export function verifyValidNumber (phoneNumber) {
   return function (dispatch) {
     // dispatch(fetchingData());
     return dataRequests.verifyValidNumber(phoneNumber)
        .then(function (response) {
-         dispatch(setNumberValidity(response.data));
+         if (response.data) {
+           var type = response.data.type === 'orphanage' ? '/orphanage' : '/partyhall';
+           dispatch(setNumberValidity(response.data));
+           dispatch(push(type));
+         } else {
+           dispatch(push("/register"));
+         }
+
        })
        .catch((err) => {
          console.log(err);
@@ -96,7 +110,7 @@ export function getPartyHall (phoneNumber) {
     return dataRequests.getPartyHall(phoneNumber)
        .then(function (response) {
          console.log(response);
-         dispatch(setPartyHall(response.data));
+         dispatch(setUser(response.data));
        })
        .catch((err) => {
          console.log(err);
@@ -112,6 +126,36 @@ export function getOrphanage (phoneNumber) {
        .then(function (response) {
          console.log(response);
          //dispatch(setDashboardData(response));
+       })
+       .catch((err) => {
+         console.log(err);
+          dispatch(push('/'))
+       });
+  };
+}
+
+export function getPreviousIntimations (phoneNumber) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.getPreviousIntimations(phoneNumber)
+       .then(function (response) {
+         console.log(response);
+         dispatch(setPreviousIntimations(response.data));
+       })
+       .catch((err) => {
+         console.log(err);
+          dispatch(push('/'))
+       });
+  };
+}
+
+export function getPreviousRequests (phoneNumber) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.getPreviousRequests(phoneNumber)
+       .then(function (response) {
+         console.log(response);
+         dispatch(setPreviousRequests(response.data));
        })
        .catch((err) => {
          console.log(err);
@@ -141,7 +185,8 @@ export function createPartyHall (userDetails) {
     return dataRequests.createPartyHall(userDetails)
        .then(function (response) {
          console.log(response);
-         //dispatch(setDashboardData(response));
+         dispatch(setUser(response.data));
+         dispatch(push("/partyhall?phone=" + response.data.phone));
        })
        .catch((err) => {
          console.log(err);
@@ -156,7 +201,8 @@ export function createOrphanage (userDetails) {
     return dataRequests.createOrphanage(userDetails)
        .then(function (response) {
          console.log(response);
-         dispatch(push("/orphanage"));
+         dispatch(setUser(response.data));
+         dispatch(push("/orphanage?phone=" + response.data.phone));
        })
        .catch((err) => {
          console.log(err);
@@ -165,13 +211,30 @@ export function createOrphanage (userDetails) {
   };
 }
 
+
 export function createSurplusFood (foodDetails) {
   return function (dispatch) {
     // dispatch(fetchingData());
     return dataRequests.createSurplusFood(foodDetails)
        .then(function (response) {
          console.log(response);
-         //dispatch(setDashboardData(response));
+         //dispatch(setIntimationStatus(response.data));
+         dispatch(push("/requestIntimations"));
+       })
+       .catch((err) => {
+         console.log(err);
+          dispatch(push('/'))
+       });
+  };
+}
+
+export function createSurplusFoodold (foodDetails) {
+  return function (dispatch) {
+    // dispatch(fetchingData());
+    return dataRequests.createSurplusFood(foodDetails)
+       .then(function (response) {
+         console.log(response);
+         dispatch(setIntimationStatus(response.data));
        })
        .catch((err) => {
          console.log(err);

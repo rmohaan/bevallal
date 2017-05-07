@@ -14,6 +14,7 @@ import RegisterPage from './views/registerPage';
 import OrphanageViewWrapper from './views/orphanageViewWrapper';
 import PartyHallView from './views/partyHallView';
 import EnsureProtectedAccess from './views/ensureProtectedAccess';
+import RequestIntimationsWrapper from './views/requestIntimationsWrapper';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -36,6 +37,7 @@ render(
           <Route path='/register' component={RegisterPage}/>
           <Route path='/orphanage' component={OrphanageViewWrapper}/>
           <Route path='/partyhall' component={PartyHallView}/>
+          <Route path='/requestIntimations' component={RequestIntimationsWrapper}/>
       </Route>
     </Router>
   </Provider>, document.getElementById('app'));

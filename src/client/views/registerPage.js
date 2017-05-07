@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as actions from '../actions/index';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import moment from 'moment';
 import { Link } from 'react-router';
 import Select from 'react-select';
@@ -111,10 +112,13 @@ _handleAreaChange (event) {
 }
 
 _handleTypeChange (event) {
-  var truthValue = event.value === 'orphanage';
+  let truthValue = event.value === 'orphanage',
+      url = event.value === 'orphanage' ? '/orphanage' : '/partyhall';
+
   this.setState ({
     type: event.value,
-    showCount: truthValue
+    showCount: truthValue,
+    url: url
   });
 }
 
@@ -133,9 +137,8 @@ render () {
   console.log(showClass, this.state.showCount);
     return (
       <div className="container">
-        <form>
           <legend className="text-align-center">Register yourself</legend>
-            <div className="margin-left-8">
+            <div className="margin-left-30">
             <div className="form-group">
             <label><b><span className="glyphicon glyphicon-tag"></span>Type</b></label>
               <Select options={typeOptions}
@@ -220,10 +223,9 @@ render () {
               onChange={this.handleCountChange}
                />
             </div>
-            <button className="btn btn-success" onClick={this.createUser}>Submit Orphange Details</button>
+            <button className="btn btn-success" onClick={this.createUser}>Submit Details</button>
             <button type="button" className="btn btn-secondary float-right margin-right-5" onClick={this.handleCancelButton}>Cancel</button>
             </div>
-        </form>
       </div>
     );
   }
@@ -231,7 +233,7 @@ render () {
 
 function select (state) {
   return {
-    data: state.data
+    data: state.numberDetails
   };
 }
 

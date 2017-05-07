@@ -10,6 +10,9 @@ const reducer = combineReducers({
   surplusFoodList: reducers.surplusFoodList,
   requestAcceptStatus: reducers.requestAcceptStatus,
   partyHall: reducers.setPartyHall,
+  intimationStatus: reducers.setIntimationStatus,
+  previousInitmationList: reducers.setPreviousIntimations,
+  previousRequestsList: reducers.setPreviousRequests,
   routing: routerReducer
 });
 

@@ -45,3 +45,36 @@ export function setPartyHall (state, action) {
 
   return newState;
 }
+
+export function setIntimationStatus (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_INTIMATION_STATUS) {
+    newState = action.payload;
+  }
+
+  return newState;
+}
+
+export function setPreviousIntimations (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_PREVIOUS_INTIMATIONS) {
+    newState = action.payload;
+  }
+
+  return newState;
+}
+
+export function setPreviousRequests (state, action) {
+  let actionType = action.type,
+      newState = Object.assign({}, state);
+
+  if (actionType === actionEvents.SET_PREVIOUS_REQUESTS) {
+    newState = action.payload;
+  }
+
+  return newState;
+}

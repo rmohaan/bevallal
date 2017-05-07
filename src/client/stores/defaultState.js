@@ -4,7 +4,10 @@ let state = {
   numberDetails: {},
   surplusFoodList: [],
   requestAcceptStatus: {},
-  partyHall: {}
+  intimationStatus: {},
+  partyHall: {},
+  previousInitmationList: [],
+  previousRequestsList: []
 };
 
 export default state;
